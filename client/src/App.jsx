@@ -1,13 +1,9 @@
-import './App.css'
-import Editor from './components/Editor/Editor'
+import "./App.css";
+
+import Home from "./pages/Home/Home";
+
 function App() {
-  return (
-    <>
-      <div>
-        <Editor />
-      </div>
-    </>
-  )
+  return <Home />;
 }
 
-export default App
+export default App;
