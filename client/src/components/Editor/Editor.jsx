@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import Prism from "prismjs";
 import styles from "./Editor.module.css";
-import './prism-gruvbox-dark.css';
+import "./prism-gruvbox-dark.css";
 
 const Editor = () => {
   const [text, setText] = useState("");
@@ -33,22 +33,22 @@ const Editor = () => {
         onScroll={handleScroll}
       >
         {lines.map((_, index) => (
-          <div key={index + 1} className="line-number">
+          <div key={index + 1} className={styles.line__number}>
             {index + 1}
           </div>
         ))}
       </div>
-      <textarea
-        className={styles.editor__textarea}
-        onChange={handleTextChange}
-        onScroll={handleScroll}
-        ref={textareaRef}
-        placeholder="Type your text here..."
-      />
-      <div>
-        <pre className={styles.code}>
+      <div className={styles.codespace}>
+        <textarea
+          className={styles.codespace__textarea}
+          onChange={handleTextChange}
+          onScroll={handleScroll}
+          ref={textareaRef}
+          placeholder="Type your text here..."
+        />
+        <pre className={styles.codespace__pre}>
           <code
-            className="language-javascript"
+            className={`${styles.codespace__code} language-javascript`}
             dangerouslySetInnerHTML={{ __html: text }}
           />
         </pre>

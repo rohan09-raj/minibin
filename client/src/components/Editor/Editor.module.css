@@ -24,13 +24,34 @@
   text-align: right;
 }
 
-.editor__textarea {
-  font-size: 1rem;
+.codespace {
+  position: relative;
+  display: flex;
   flex: 1;
+  margin-left: 10px;
+}
+
+.codespace__textarea {
+  caret-color: white;
+  background-color: transparent;
+  position: absolute;
+  color: transparent;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
   line-height: 1.5rem;
   resize: none;
   border: none;
   outline: none;
   padding: 0px;
   overflow-y: auto;
+}
+
+.codespace__pre {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
