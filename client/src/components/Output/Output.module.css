@@ -1,11 +1,3 @@
-.container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-}
-
 .editor {
   display: flex;
   flex-direction: row;
@@ -37,24 +29,6 @@
   display: flex;
   flex: 1;
   margin-left: 10px;
-}
-
-.codespace__textarea {
-  caret-color: white;
-  background-color: transparent;
-  position: absolute;
-  color: transparent;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  resize: none;
-  border: none;
-  outline: none;
-  padding: 0px;
-  overflow-y: auto;
 }
 
 .codespace__pre {
