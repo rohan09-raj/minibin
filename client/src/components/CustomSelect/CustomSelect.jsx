@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./CustomSelect.css";
+import styles from "./CustomSelect.module.css";
 
 const CustomSelect = ({ options, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,21 +13,21 @@ const CustomSelect = ({ options, onSelect }) => {
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    onSelect(option);
+    onSelect(option.value);
     setIsOpen(false);
   };
 
   return (
-    <div className="custom-select-container">
-      <div className="selected-option" onClick={toggleDropdown}>
+    <div className={styles.select}>
+      <div className={styles.selected__option} onClick={toggleDropdown}>
         {selectedOption ? selectedOption.label : "Select an option"}
       </div>
       {isOpen && (
-        <div className="options-container">
+        <div className={styles.options}>
           {options.map((option) => (
             <div
               key={option.value}
-              className="option"
+              className={styles.option}
               onClick={() => handleOptionClick(option)}
             >
               {option.label}
