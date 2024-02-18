@@ -6,6 +6,7 @@ import "../prism-themes/prism-gruvbox-dark.css";
 import { SERVER_BASE_URL } from "../../utils/constants";
 
 const Output = ({ id }) => {
+  const params = useParams();
   const textareaRef = useRef(null);
   const lineNumberRef = useRef(null);
   const [lines, setLines] = useState([]);
