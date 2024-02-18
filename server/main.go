@@ -21,8 +21,8 @@ var port int
 var dbFilePath string
 
 type Bin struct {
-	HtmlContent string `json:"html_content"`
-	Language    string `json:"language"`
+	Content  string `json:"content"`
+	Language string `json:"language"`
 }
 
 const (
@@ -75,7 +75,7 @@ func postBin(w http.ResponseWriter, r *http.Request) {
 		}
 		id := generateShortID()
 		handleError(w, saveBin(id, bin), http.StatusInternalServerError)
-		respondWithJSON(w, http.StatusOK, map[string]string{"id": id, "html_content": bin.HtmlContent, "language": bin.Language})
+		respondWithJSON(w, http.StatusOK, map[string]string{"id": id, "content": bin.Content, "language": bin.Language})
 	})
 }
 
@@ -114,7 +114,7 @@ func createTable() error {
 	_, err := db.Exec(`
 	CREATE TABLE IF NOT EXISTS bins (
 		id TEXT PRIMARY KEY,
-		html_content TEXT,
+		content TEXT,
 		language TEXT
 	)
 `)
@@ -123,12 +123,12 @@ func createTable() error {
 
 func getBinById(id string) (Bin, error) {
 	var bin Bin
-	err := db.QueryRow("SELECT html_content, language FROM bins WHERE id = ?", id).Scan(&bin.HtmlContent, &bin.Language)
+	err := db.QueryRow("SELECT content, language FROM bins WHERE id = ?", id).Scan(&bin.Content, &bin.Language)
 	return bin, err
 }
 
 func saveBin(id string, bin Bin) error {
-	_, err := db.Exec("INSERT INTO bins (id, html_content, language) VALUES (?, ?, ?)", id, bin.HtmlContent, bin.Language)
+	_, err := db.Exec("INSERT INTO bins (id, content, language) VALUES (?, ?, ?)", id, bin.Content, bin.Language)
 	return err
 }
 
