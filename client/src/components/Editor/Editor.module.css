@@ -1,34 +1,37 @@
 .container {
-  position: relative;
   width: 100vw;
   display: flex;
   flex-direction: column;
-  flex: 1;
 }
 
 .languages {
-  appearance: none;
-  background-color: black;
+  background-color: transparent;
   border: none;
-  padding: 0 1em 0 0;
-  margin: 0;
+  padding: 10px 0;
+  margin-left: 36px;
   font-family: inherit;
   font-size: inherit;
   cursor: inherit;
   line-height: inherit;
+  width: 7rem;
+  outline: none;
+  color: white;
 }
 
 .languages__option {
-  padding: 0.5em 1em;
+  width: 10rem;
+  border: none;
   cursor: pointer;
   transition: 0.3s;
+  background: #3c3836;
 }
 
 .editor {
   display: flex;
   flex-direction: row;
   flex: 1;
-  margin: 0 70px 0 40px;
+  padding: 20px 70px 0 40px;
+  border-top: 1px solid #3c3836;
 }
 
 .line__numbers {
@@ -83,7 +86,7 @@
 }
 
 .btn__save {
-  position: absolute;
+  position: fixed;
   bottom: 3rem;
   right: 3rem;
   height: 8rem;
