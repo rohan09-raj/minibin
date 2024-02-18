@@ -1,5 +1,6 @@
 export const SERVER_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 export const SUPPORTED_LANGUAGES = {
+  none: "Plain Text",
   c: "C",
   cpp: "C++",
   css: "CSS",

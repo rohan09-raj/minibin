@@ -6,13 +6,11 @@ import "../prism-themes/prism-gruvbox-dark.css";
 import { SERVER_BASE_URL } from "../../utils/constants";
 
 const Output = ({ id }) => {
-  const params = useParams();
   const textareaRef = useRef(null);
   const lineNumberRef = useRef(null);
   const [lines, setLines] = useState([]);
-  const [code, setCode] = useState("");
-
-  console.log(params.id);
+  const [text, setText] = useState("");
+  const [language, setLanguage] = useState("");
 
   const handleScroll = () => {
     if (textareaRef.current && lineNumberRef.current) {
@@ -21,21 +19,22 @@ const Output = ({ id }) => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`${SERVER_BASE_URL}/bin/${params.id}`);
-      const data = await response.json();
-      setCode(Prism.highlight(
-        data.html_content,
-        Prism.languages.javascript,
-        "javascript"
-      ));
-      setLines(data.html_content.split("\n"));
-    };
-
     fetchData();
   }, [params.id]);
 
+  useEffect(() => {
+    Prism.highlightAll();
+  }, [text, language]);
 
+  const fetchData = async () => {
+    const response = await fetch(`${SERVER_BASE_URL}/bin/${params.id}`);
+    const data = await response.json();
+    if (response.ok) {
+      setLanguage(data.language);
+      setLines(data.content.split("\n"));
+      setText(data.content);
+    }
+  };
 
   return (
     <div className={styles.editor}>
@@ -52,10 +51,9 @@ const Output = ({ id }) => {
       </div>
       <div className={styles.codespace}>
         <pre className={styles.codespace__pre}>
-          <code
-            className={`${styles.codespace__code} language-javascript`}
-            dangerouslySetInnerHTML={{ __html: code }}
-          />
+          <code className={`${styles.codespace__code} language-${language}`}>
+            {text}
+          </code>
         </pre>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Prism from "prismjs";
 import styles from "./Editor.module.css";
@@ -8,20 +8,12 @@ import { SERVER_BASE_URL, SUPPORTED_LANGUAGES } from "../../utils/constants";
 const Editor = () => {
   const navigate = useNavigate();
   const [text, setText] = useState("");
-  const [code, setCode] = useState("");
   const [language, setLanguage] = useState("js");
   const textareaRef = useRef(null);
   const lineNumberRef = useRef(null);
 
   const handleTextChange = (event) => {
     setText(event.target.value);
-    setCode(
-      Prism.highlight(
-        event.target.value,
-        Prism.languages[language],
-        language.toString()
-      )
-    );
   };
 
   const handleScroll = () => {
@@ -30,50 +22,45 @@ const Editor = () => {
     }
   };
 
-  const handleClick = () => {
-    fetch(`${SERVER_BASE_URL}/bin`, {
+  const handleClick = async () => {
+    const response = await fetch(`${SERVER_BASE_URL}/bin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        html_content: text,
+        language,
+        content: text,
       }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        navigate(`/${data.id}`);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    });
+    const data = await response.json();
+    if (response.ok) {
+      navigate(`/${data.id}`);
+    } else {
+      console.error(data);
+    }
   };
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
-    setCode(
-      Prism.highlight(
-        text,
-        Prism.languages[event.target.value],
-        event.target.value.toString()
-      )
-    );
-  }
+  };
 
+  useEffect(() => {
+    Prism.highlightAll();
+  }, [text, language]);
 
   const lines = text.split("\n");
 
   return (
     <div className={styles.container}>
-      <select onChange={(event) => handleLanguageChange(event)}>
+      <select className={styles.languages} onChange={(event) => handleLanguageChange(event)}>
         {Object.keys(SUPPORTED_LANGUAGES).map((language) => (
-          <option key={language} value={language}>
+          <option className={styles.languages__option} key={language} value={language}>
             {SUPPORTED_LANGUAGES[language]}
           </option>
         ))}
       </select>
-      <button onClick={() => handleClick()}>Click me</button>
+      <button className={styles.btn__save} onClick={() => handleClick()}><img src="assets/icons/save.svg" className={styles.btn__icon} /></button>
       <div className={styles.editor}>
         <div
           className={styles.line__numbers}
@@ -91,14 +78,14 @@ const Editor = () => {
             className={styles.codespace__textarea}
             onChange={handleTextChange}
             onScroll={handleScroll}
+            spellCheck="false"
             ref={textareaRef}
             placeholder="Type your text here..."
           />
           <pre className={styles.codespace__pre}>
-            <code
-              className={`${styles.codespace__code} language-javascript`}
-              dangerouslySetInnerHTML={{ __html: code }}
-            />
+            <code className={`${styles.codespace__code} language-${language}`}>
+              {text}
+            </code>
           </pre>
         </div>
       </div>

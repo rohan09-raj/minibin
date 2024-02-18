@@ -1,23 +1,40 @@
 .container {
-  width: 100%;
+  position: relative;
+  width: 100vw;
   display: flex;
   flex-direction: column;
-  align-items: center;
   flex: 1;
+}
+
+.languages {
+  appearance: none;
+  background-color: black;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+}
+
+.languages__option {
+  padding: 0.5em 1em;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .editor {
   display: flex;
   flex-direction: row;
   flex: 1;
-  width: 100%;
+  margin: 0 70px 0 40px;
 }
 
 .line__numbers {
   display: flex;
   flex-direction: column;
-  padding: 0px 20px 0px 40px;
-  border-right: 1px solid #ccc;
+  padding: 0px 20px 0px 0px;
   overflow-y: auto;
 }
 
@@ -41,7 +58,7 @@
 
 .codespace__textarea {
   caret-color: white;
-  background-color: transparent;
+  background: transparent;
   position: absolute;
   color: transparent;
   left: 0;
@@ -58,8 +75,29 @@
 }
 
 .codespace__pre {
+  background: transparent !important;
   height: 100%;
   width: 100%;
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.btn__save {
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+  height: 8rem;
+  width: 8rem;
+  background-color: #ebdbb2;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 1;
+}
+
+.btn__icon {
+  height: 4rem;
+  width: 4rem;
 }
