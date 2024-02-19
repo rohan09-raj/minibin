@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Prism from "prismjs";
 import styles from "./Editor.module.css";
 import "../prism-themes/prism-gruvbox-dark.css";
-import { CLIENT_BASE_URL, SERVER_BASE_URL } from "../../utils/constants";
+import { CLIENT_BASE_URL, SERVER_BASE_URL, URL_REGEX } from "../../utils/constants";
 import Header from "../Header/Header";
 
 const Editor = () => {
@@ -61,7 +61,7 @@ const Editor = () => {
       const response = await fetch(`${SERVER_BASE_URL}/bin/${id}`);
       const data = await response.json();
       if (response.ok) {
-        const isURL = /^(https?:\/\/)?([\w.-]+\.[a-z]{2,})(\/?[^\s]*)?$/.test(data.content);
+        const isURL = URL_REGEX.test(data.content);
         if (isURL) {
           setText(`Your shortened URL: ${CLIENT_BASE_URL}/r/${id}`);
           if (location.pathname === `/r/${id}`) {
