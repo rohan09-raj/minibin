@@ -61,7 +61,7 @@ const Editor = () => {
       const response = await fetch(`${SERVER_BASE_URL}/bin/${id}`);
       const data = await response.json();
       if (response.ok) {
-        const isURL = /^https?:\/\//.test(data.content);
+        const isURL = /^(https?:\/\/)?([\w.-]+\.[a-z]{2,})(\/?[^\s]*)?$/.test(data.content);
         if (isURL) {
           setText(`Your shortened URL: ${CLIENT_BASE_URL}/r/${id}`);
           if (location.pathname === `/r/${id}`) {
