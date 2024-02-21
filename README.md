@@ -1,6 +1,6 @@
 # Minibin
 
-This is a simple code sharing service and a URL shortener.
+This is a simple code sharing service and a URL shortener inspired by [Katbin](https://katb.in/)
 
 ## Features
 
@@ -58,4 +58,3 @@ Run the server.
 ```bash
 ./minibin
 ```
-
