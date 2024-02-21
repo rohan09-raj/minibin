@@ -13,7 +13,7 @@ pre[class*="language-"],
 code[class*="language-"] {
   /* there might be some slight offsets,
        depending on what font you select */
-  font-family: "Poppins", monospace;
+  font-family: "Roboto Mono", monospace;
 }
 
 /* from Prism */
@@ -24,6 +24,7 @@ pre[class*="language-"].line-numbers {
 }
 
 pre[class*="language-"].line-numbers > code {
+  display: block;
   position: relative;
   white-space: inherit;
 }
