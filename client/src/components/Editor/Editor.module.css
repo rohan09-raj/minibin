@@ -22,6 +22,7 @@
 }
 
 .codespace__textarea {
+  font-family: "Poppins", monospace;
   caret-color: var(--color-light);
   background: transparent;
   position: absolute;
