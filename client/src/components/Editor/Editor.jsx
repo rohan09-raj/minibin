@@ -5,7 +5,6 @@ import styles from "./Editor.module.css";
 import "../prism-themes/prism-gruvbox-dark.css";
 import "../prism-themes/prism-line-numbers.css";
 import {
-  CLIENT_BASE_URL,
   SERVER_BASE_URL,
   URL_REGEX,
 } from "../../utils/constants";
@@ -47,6 +46,43 @@ const Editor = () => {
     });
     const data = await response.json();
     if (response.ok) {
+      const isURL = URL_REGEX.test(text);
+      if (isURL) {
+        navigator.clipboard
+          .writeText(`${window.location.origin}/r/${data.id}`)
+          .then(
+            function () {
+              alert("Short URL copied to clipboard!");
+            },
+            function () {
+              try {
+                document.execCommand("copy");
+                alert("Short URL copied to clipboard!");
+              } catch (err) {
+                console.log("Oops, unable to copy");
+              }
+            }
+          );
+      } else {
+        navigator.clipboard
+          .writeText(`${window.location.origin}/r/${data.id}`)
+          .then(
+            function () {
+              navigator.clipboard.writeText(
+                `${window.location.origin}/${data.id}`
+              );
+              alert("URL copied to clipboard!");
+            },
+            function () {
+              try {
+                document.execCommand("copy");
+                alert("URL copied to clipboard!");
+              } catch (err) {
+                console.log("Oops, unable to copy");
+              }
+            }
+          );
+      }
       navigate(`/${data.id}`);
     } else {
       console.error(data);
@@ -68,7 +104,7 @@ const Editor = () => {
       if (response.ok) {
         const isURL = URL_REGEX.test(data.content);
         if (isURL) {
-          setText(`Your shortened URL: ${CLIENT_BASE_URL}/r/${id}`);
+          setText(`Your shortened URL: ${window.location.origin}/r/${id}`);
           if (location.pathname === `/r/${id}`) {
             window.location.href = data.content;
           }
